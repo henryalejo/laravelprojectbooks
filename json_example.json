@@ -1,0 +1,19 @@
+{
+  "books":[
+{
+"id": 23,
+"num_books": 2,
+"value": "9.78"
+},
+{
+"id": 24,
+"num_books": 2,
+"value": "3.48"
+},
+{
+"id": 25,
+"num_books": 2,
+"value": "16.50"
+}
+]
+}
