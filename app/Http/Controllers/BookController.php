@@ -19,13 +19,8 @@ class BookController extends Controller
    */
   public function index()
   {
-      //$books = Book::find(22);
       $books = Book::all();
-
-      //$books->increment('avaliable', 5,[ 'value' => $books->value - 5]);
       return response()->json($books, 200);
-
-      //return response()->json($books->sales()->get(), $statusCode);
 
   }
   /**
@@ -54,9 +49,7 @@ class BookController extends Controller
     ]);
     //Regular expresion above check 'value' which must be greater than Cero and valid decimal
     if ($validator->fails()) {
-          //  return redirect('post/create')->withErrors($validator)->withInput();
           return response()->json('Incomplete',409);
-          //return response()->json($validator->valid(),409);
     }
     else{
       $book = new Book;
@@ -121,9 +114,9 @@ class BookController extends Controller
     //Regular expresion above check 'value' which must be greater than Cero and valid decimal
 
     if ($validator->fails()) {
-          //  return redirect('post/create')->withErrors($validator)->withInput();
+
           return response()->json('Incomplete',409);
-          //return response()->json($validator->valid(),409);
+
     }
     else{
       $book = Book::find($id);
@@ -152,7 +145,7 @@ class BookController extends Controller
     //Only destroy book with no relations  with sales , integtity of database
     $validator = Validator::make([$id],['numeric']);
     if($validator->fails()){
-      return response()->json('Bad request: invalid id', 400);      
+      return response()->json('Bad request: invalid id', 400);
     }
     else{
       $book = Book::find($id);
