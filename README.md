@@ -30,7 +30,8 @@ Henry Alejandro Orjuela
   `php artisan make:migration CreateSale_booksTable --create=sale_books`
 
   Now for migrations add the corresponding Schema for each migration:
-  Books
+
+  Books:
   ```php
   Schema::create('books', function (Blueprint $table) {
       $table->increments('id');
@@ -43,7 +44,8 @@ Henry Alejandro Orjuela
       $table->integer('total_sales');
   });
   ```
-  Sales
+  Sales:
+
   ```php
   Schema::create('sales', function (Blueprint $table) {
       $table->increments('id');
@@ -51,7 +53,8 @@ Henry Alejandro Orjuela
       $table->decimal('amount', 5, 2);
   });
   ```
-  Sale_books
+  Sale_books:
+
   ```php
   Schema::create('sale_books', function (Blueprint $table) {
       $table->integer('sale_id')->unsigned();
@@ -78,19 +81,38 @@ Henry Alejandro Orjuela
   php artisan make:seeder SalesTableSeeder
 
 
-See the route listing
-`php artisan route:list`
+  See the route listing
+  `php artisan route:list`
 
-To avoid some security on the API change in the folder  `app\Http\Middleware`
+  To avoid some security on the API change in the folder  `app\Http\Middleware`
 
-Execute seeds
-php artisan db:seed --class=BooksTableSeeder
+  Execute seeds
+  php artisan db:seed --class=BooksTableSeeder
 
 
-and add exeptions to the routes:
-```php
-class VerifyCsrfToken extends BaseVerifier
-{
-protected $except = ['book*', 'sale*'];
-}
-```
+  To easy the execution of POST and DELETE request add exceptions at the class VerifyCsrfToken:
+  ```php
+  class VerifyCsrfToken extends BaseVerifier
+  {
+  protected $except = ['book*', 'sale*'];
+  }
+  ```
+3. Testing with PhpUnit
+
+  To test using PhpUnit, first check if PhpUnit is avaliable:
+  `/vendor/bin/phpunit --version`
+  You shall see:
+  `PHPUnit 4.8.24 by Sebastian Bergmann and contributors.`
+
+  Then through artisan create a test for Book:
+  `php artisan make:test BookApiTest`
+
+  To check and modify the file go to `/test/BookApiTest.php`
+
+  Then through artisan create a test for Sale:
+  `php artisan make:test SaleApiTest`
+
+  To check and modify the file go to `/test/SaleApiTest.php`
+
+  To execute the Test call PhpUnit:
+  `/vendor/bin/phpunit`

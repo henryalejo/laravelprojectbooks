@@ -50,14 +50,13 @@ class BookController extends Controller
       'author' => 'required|max:255',
       'isbn' => 'required|alpha_num|max:15',
       'publication' => 'required|date',
-      'value' => 'required|regex:/^\s*-?[1-9]\d*(\.\d{1,2})?\s*$/'
+      'value' => 'required|regex:/^(?=.*[1-9])\d{0,5}(?:\.\d{1,2})?\s*$/'
     ]);
-
+    //Regular expresion above check 'value' which must be greater than Cero and valid decimal
     if ($validator->fails()) {
           //  return redirect('post/create')->withErrors($validator)->withInput();
           return response()->json('Incomplete',409);
           //return response()->json($validator->valid(),409);
-
     }
     else{
       $book = new Book;
@@ -66,15 +65,8 @@ class BookController extends Controller
       $book->author     = $request->input('author');
       $book->isbn       = $request->input('isbn');
       $book->publication= $request->input('publication');
+      $book->value      = $request->input('value');
       $book->total_sales= 0;
-      //value must be greater than Cero
-        if(floatval($request->input('value'))>0){
-          $book->value      = $request->input('value');
-        }
-        else{
-        $book->value =1;
-        }
-
       $book->save();
       return response()->json('Created',201);
     }
@@ -88,9 +80,15 @@ class BookController extends Controller
    */
   public function show($id)
   {
-    $book = Book::find($id);
-    $statusCode = 200;
-    return response()->json($book, $statusCode);
+    $validator = Validator::make([$id],['numeric']);
+    if ($validator->fails()){
+      return response()->json('Bad request: invalid id', 400);
+    }
+    else{
+      $book = Book::find($id);
+      return response()->json($book, 200);
+    }
+    //
   }
 
   /**
@@ -112,21 +110,35 @@ class BookController extends Controller
    */
   public function update(Request $request,$id)
   {
-    $book = Book::find($id);
-    if (!empty((array) $book)) {
-      if($request->has('avaliable'))  $book->avaliable   = $request->input('avaliable');
-      if($request->has('name'))       $book->name        = $request->input('name');
-      if($request->has('author'))     $book->author      = $request->input('author');
-      if($request->has('isbn'))       $book->isbn        = $request->input('isbn');
-      if($request->has('publication'))$book->publication = $request->input('publication');
-      if($request->has('value')){
-        //value must be greater than Cero
-          if (floatval($request->input('value'))>0)$book->value    = $request->input('value');
-      }
-      $book->save();
-      return response()->json('Success',200);
-    }else
-      return response()->json('Book not found',404);
+    $validator = Validator::make($request->all(), [
+      'avaliable' => 'numeric',
+      'name' => 'max:255',
+      'author' => 'max:255',
+      'isbn' => 'alpha_num|max:15',
+      'publication' => 'date',
+      'value' => 'regex:/^(?=.*[1-9])\d{0,5}(?:\.\d{1,2})?\s*$/'
+    ]);
+    //Regular expresion above check 'value' which must be greater than Cero and valid decimal
+
+    if ($validator->fails()) {
+          //  return redirect('post/create')->withErrors($validator)->withInput();
+          return response()->json('Incomplete',409);
+          //return response()->json($validator->valid(),409);
+    }
+    else{
+      $book = Book::find($id);
+      if (!empty((array) $book)) {
+        if($request->has('avaliable'))  $book->avaliable   = $request->input('avaliable');
+        if($request->has('name'))       $book->name        = $request->input('name');
+        if($request->has('author'))     $book->author      = $request->input('author');
+        if($request->has('isbn'))       $book->isbn        = $request->input('isbn');
+        if($request->has('publication'))$book->publication = $request->input('publication');
+        if($request->has('value'))      $book->value       = $request->input('value');
+        $book->save();
+        return response()->json('Success',200);
+      }else
+        return response()->json('Book not found',404);
+    }
   }
 
   /**
@@ -137,20 +149,28 @@ class BookController extends Controller
    */
   public function destroy($id)
   {
-    $book = Book::find($id);
-    if (!empty((array) $book)) {
-      $foreing= (array) $book->sales()->first();
-      //Check for foreing keys
-      if(empty($foreing)){
-        $book->delete();
-        return response()->json('Success',200);
-      }
-      else{
-        return response()->json('Delete Conflict ',409);
-      }
-
+    //Only destroy book with no relations  with sales , integtity of database
+    $validator = Validator::make([$id],['numeric']);
+    if($validator->fails()){
+      return response()->json('Bad request: invalid id', 400);      
     }
-    else
-      return response()->json('Book not found',404);
+    else{
+      $book = Book::find($id);
+      if (!empty((array) $book)) {
+        $foreing= (array) $book->sales()->first();
+        //Check for foreing keys
+        if(empty($foreing)){
+          $book->delete();
+          return response()->json('Success',200);
+        }
+        else{
+          return response()->json('Delete Conflict ',409);
+        }
+
+      }
+      else
+        return response()->json('Book not found',404);
+    }
+
   }
 }

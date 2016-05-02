@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', function () { return view('welcome');});
+//Route::get('/', function () { return view('booksales');});
 Route::resource('sale', 'SaleController', ['only' => ['index','store','show','update','destroy']]);
 //Route::resource('books', 'BookController');
 //Route::resource('books', 'BookController', ['only' => ['index', 'show']]);

@@ -52,7 +52,7 @@ class SaleController extends Controller
     if ($validator->fails()) {
           //  return redirect('post/create')->withErrors($validator)->withInput();
           //return response()->json('Incomplete',409);
-          return response()->json($validator->errors(),409);
+          return response()->json('Bad Request',400);
     }
     else{
       //creation fo new sale
@@ -85,8 +85,17 @@ class SaleController extends Controller
    */
   public function show($id)
   {
-    $sale = Sale::find($id);
-    return response()->json($sale->books()->get(), 200);
+
+    $validator = Validator::make([$id],['numeric']);
+    if ($validator->fails()){
+      return response()->json('Bad request: invalid id', 400);
+    }
+    else{
+      $sale = Sale::find($id);
+      if (!empty($sale))
+      return response()->json($sale->books()->get(), 200);
+      else return response()->json('Bad request: invalid id', 400);
+    }
   }
 
   /**

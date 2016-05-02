@@ -101,7 +101,15 @@ class BooksTableSeeder extends Seeder
           'publication' => date('2003-06-05'),
           'value' => 19.25,
           'total_sales'=> 0
-        ]
+        ],
+        [
+          'avaliable' => 34,
+          'name' => 'HTML5 Games',
+          'author' => 'Jacob Seidelin',
+          'isbn' => '9781119975083',
+          'publication' => '2013-10-05',
+          'value' => 12.50,
+          'total_sales'=> 0]
     ]);
     }
 }
