@@ -1,11 +1,11 @@
 ### laravelprojectbooks
 You can view online deployment at : https://laravelprojectbooks.herokuapp.com
-whit functional API REST services and HTML5 UI.
+with functional API REST services and HTML5 UI.
 
-# Book Sales Management in Laravel
-Henry Alejandro Orjuela
+## Book Sales Management in Laravel
+#Henry Alejandro Orjuela Torres
 
-1. Create  Book model and migration
+1. Create Book model and migration
 
   `php artisan make:model Book --migration`
 
@@ -16,20 +16,30 @@ Henry Alejandro Orjuela
   This problem was managed as many to many relation,  is necessary add to model Sale.
   (the models are in app folder)
   ```php
-  public function books()
+  class Book extends Model
   {
-      return $this->belongsToMany('App\Book', 'sale_books');
+      public $timestamps = false;//no timestamps on DB
+      public function sales()
+      {
+          return $this->belongsToMany('App\Sale','sale_books')->withPivot('num_books','book_curr_val');
+      }
   }
   ```
-  The corresponding  to Book model
+  The corresponding  to sale model
   ```php
-  public function sales()
+  class Sale extends Model
   {
-      return $this->belongsToMany('App\Sale');
+      public $timestamps = false;//no timestamps on DB
+      public function books()
+      {
+          return $this->belongsToMany('App\Book','sale_books')->withPivot('num_books','book_curr_val');
+      }
   }
   ```
-  Then create only a migration for many to many table which is called `sale_books`
+  Then create only a migration for many to many table which is called `sale_books`.
+
   `php artisan make:migration CreateSale_booksTable --create=sale_books`
+
 
   Now for migrations add the corresponding Schema for each migration:
 
@@ -50,9 +60,9 @@ Henry Alejandro Orjuela
 
   ```php
   Schema::create('sales', function (Blueprint $table) {
-      $table->increments('id');
-      $table->date('dateofsale');
-      $table->decimal('amount', 5, 2);
+    $table->increments('id');
+    $table->date('dateofsale');
+    $table->decimal('amount', 5, 2);
   });
   ```
   Sale_books:
@@ -68,19 +78,38 @@ Henry Alejandro Orjuela
 
   });
   ```
+  You can check the created seeds at folder `database\migrations\`
 
   Execute migrations
+
   `php artisan migrate`
+  Now there is a database created.
+2. Seeds
+  Laravel uses seeds to add information to the database. Artisan has this functionality, below are the commands used to create the seeds:
 
-2. Controllers
+  `php artisan make:seeder BooksTableSeeder`
 
-  create Controllers
-  php artisan make:controller BookController
-  php artisan make:controller SaleController
+  `php artisan make:seeder SalesTableSeeder`
 
-  create seeders
-  php artisan make:seeder BooksTableSeeder
-  php artisan make:seeder SalesTableSeeder
+  You can check the created seeds at folder `database\seeds\`
+
+  When the seeds are finished, use artisan to execute the seeds:
+
+  `php artisan db:seed --class=BooksTableSeeder`
+
+  `php artisan db:seed --class=SalesTableSeeder`
+
+
+3. Controllers
+
+  To create a REST API laravel has routes and controller to make it easy.
+
+  Use artisan to create Controllers:
+
+  `php artisan make:controller BookController`
+  `php artisan make:controller SaleController`
+
+
 
 
   See the route listing
@@ -88,9 +117,7 @@ Henry Alejandro Orjuela
 
   To avoid some security on the API change in the folder  `app\Http\Middleware`
 
-  Execute seeds
-  php artisan db:seed --class=BooksTableSeeder
-  php artisan db:seed --class=SalesTableSeeder
+
 
 
   To easy the execution of POST and DELETE request add exceptions at the class VerifyCsrfToken:
@@ -100,7 +127,7 @@ Henry Alejandro Orjuela
   protected $except = ['book*', 'sale*'];
   }
   ```
-3. Testing with PhpUnit
+4. Testing with PhpUnit
 
   To test using PhpUnit, first check if PhpUnit is avaliable:
   `/vendor/bin/phpunit --version`
