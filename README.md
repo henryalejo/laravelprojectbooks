@@ -5,11 +5,11 @@ with functional API REST services and HTML5 UI.
 ## Book Sales Management in Laravel
 #Henry Alejandro Orjuela Torres
 
-1. Create Book model and migration
+1. #Create Book model and migration:
 
   `php artisan make:model Book --migration`
 
-  Create  Sale model and migration
+  Create  Sale model and migration:
 
   `php artisan make:model Sale --migration`
 
@@ -80,9 +80,10 @@ with functional API REST services and HTML5 UI.
   ```
   You can check the created seeds at folder `database\migrations\`
 
-  Execute migrations
+  Execute migrations:
 
   `php artisan migrate`
+
   Now there is a database created.
 2. Seeds
   Laravel uses seeds to add information to the database. Artisan has this functionality, below are the commands used to create the seeds:
