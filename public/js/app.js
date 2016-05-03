@@ -20,6 +20,11 @@ angular.module('myApp',['ngRoute'])
         controller: 'SaleCtrl',
         resolve: {apiUrl : function(){return myUrl;}}
       })
+      .when('/booksales', {
+        templateUrl: 'views/sale_book.html',
+        controller: 'SaleBookCtrl',
+        resolve: {apiUrl : function(){return myUrl;}}
+      })
       .otherwise({
         redirectTo: '/'
       });

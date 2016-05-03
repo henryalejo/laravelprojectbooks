@@ -97,7 +97,37 @@ class SaleController extends Controller
       else return response()->json('Bad request: invalid id', 400);
     }
   }
+  /**
+   * Show the sales by book $id
+   *
+   * @param  int  $id
+   * @return Response
+   */
+  public function salesByBook($id){
+    $validator = Validator::make([$id],['numeric']);
+    if($validator->fails()){
+      return response()->json('Bad request: invalid id', 400);
+    }
+    else{
+      $book = Book::find($id);
+      if (!empty((array) $book)) {
+        $foreing= $book->sales()->get();
+        //Check for foreing keys
+        if(!empty((array) $foreing)){
+          //$temp.book=$book;
+          //$temp.sales=$foreing;
+          return response()->json($foreing,200);
+        }
+        else{
+          return response()->json(['No Sales'],200);
+        }
 
+      }
+      else
+        return response()->json('Book not found',404);
+    }
+
+  }
   /**
    * Show the form for editing the specified resource.
    *

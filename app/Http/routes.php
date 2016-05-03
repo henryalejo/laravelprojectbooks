@@ -15,6 +15,7 @@ Blade::setContentTags('<%', '%>');
 Blade::setEscapedContentTags('<%%', '%%>');
 //Route::get('/', function () { return view('welcome');});
 Route::get('/', function () { return view('booksales');});
+Route::get('/sale/book/{id}', 'SaleController@salesByBook');
 Route::resource('sale', 'SaleController', ['only' => ['index','store','show']]);
 Route::get('book/admin', function () { return view('bookadmin');});
 Route::resource('book', 'BookController', ['only' => ['index','store','show','update','destroy']]);

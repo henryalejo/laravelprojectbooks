@@ -1,25 +1,25 @@
 'use strict';
 angular.module('myApp')
-  .controller('SaleCtrl', function ($scope,$http,apiUrl) {
-    $scope.sales={};
+  .controller('SaleBookCtrl', function ($scope,$http,apiUrl) {
+    $scope.books={};
     $scope.saleDetails={};
+    $scope.tempBook={};
     $scope.total=0;
-    $scope.tempSale={};
     var url= apiUrl;
-    $http.get(url+ 'sale').then(function successCallback(response) {
+    $http.get(url+ 'book').then(function successCallback(response) {
                           console.log(response.data);
-                          $scope.sales=  response.data;
+                          $scope.books=  response.data;
 
                         }, function errorCallback(response) {
                             console.log(response.data);
                         });
 
-    $scope.details= function(sale){
-      $http.get(url+ 'sale/'+sale.id).then(function successCallback(response) {
+    $scope.details= function(book){
+      $http.get(url+ 'sale/book/'+book.id).then(function successCallback(response) {
                             console.log(response.data);
                             $scope.saleDetails=  response.data;
                             setTotal();
-                            $scope.tempSale = sale;
+                            $scope.tempBook=book;
                           }, function errorCallback(response) {
                               console.log(response.data);
                           });

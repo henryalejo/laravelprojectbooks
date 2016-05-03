@@ -21,6 +21,7 @@
     <script src="js/controllers/main.js"></script>
     <script src="js/controllers/books.js"></script>
     <script src="js/controllers/sales.js"></script>
+    <script src="js/controllers/sale_book.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,6 +57,9 @@
                   </li>
                   <li>
                       <a href="#/sales">Sales Admin</a>
+                  </li>
+                  <li>
+                      <a href="#/booksales">Sales by book</a>
                   </li>
               </ul>
           </div>

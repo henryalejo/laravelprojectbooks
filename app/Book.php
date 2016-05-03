@@ -12,6 +12,6 @@ class Book extends Model
     public function sales()
     {
         //return $this->belongsToMany('App\Sale', 'sale_books', 'sale_id', 'book_id');
-        return $this->belongsToMany('App\Sale','sale_books');
+        return $this->belongsToMany('App\Sale','sale_books')->withPivot('num_books','book_curr_val');
     }
 }
