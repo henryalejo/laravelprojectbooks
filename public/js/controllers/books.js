@@ -1,12 +1,10 @@
 'use strict';
 angular.module('myApp')
-  .controller('BookCtrl', function ($scope,$http) {
+  .controller('BookCtrl', function ($scope,$http,apiUrl) {
     $scope.books={};
     $scope.edit={};
     $scope.postBook={};
-    var url= 'http://localhost/laravelproject/public/';
-    $http.get(url+ 'book').then(function successCallback(response) {
-                          //console.log(response.data);
+    $http.get(apiUrl+ 'book').then(function successCallback(response) {
                           $scope.books=  response.data;
 
                         }, function errorCallback(response) {
@@ -15,7 +13,7 @@ angular.module('myApp')
 
   $scope.save = function(){
     console.log($scope.edit);
-  $http.put(url+ 'book/'+$scope.edit.id, $scope.edit).then(function successCallback(response) {
+  $http.put(apiUrl+ 'book/'+$scope.edit.id, $scope.edit).then(function successCallback(response) {
                           console.log(response.data);
                           $scope.edit={};
                           $scope.postBook={};
@@ -32,7 +30,7 @@ angular.module('myApp')
 
   }
   $scope.deleteBook = function (id){
-    $http.delete(url+'book/'+id).then(function successCallback(response) {
+    $http.delete(apiUrl+'book/'+id).then(function successCallback(response) {
                             console.log(response.data);
 
                           }, function errorCallback(response) {
@@ -45,7 +43,7 @@ angular.module('myApp')
   };
   $scope.new = function (){
     console.log($scope.postBook);
-    $http.post(url+'book',$scope.postBook).then(function successCallback(response) {
+    $http.post(apiUrl+'book',$scope.postBook).then(function successCallback(response) {
                             console.log(response.data);
                             $scope.edit={};
                             $scope.postBook={};
