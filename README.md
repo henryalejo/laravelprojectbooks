@@ -3,9 +3,9 @@ You can view online deployment at : https://laravelprojectbooks.herokuapp.com
 with functional API REST services and HTML5 UI.
 
 ## Book Sales Management in Laravel
-#Henry Alejandro Orjuela Torres
+####Henry Alejandro Orjuela Torres
 
-1. #Create Book model and migration:
+### 1. Create Book model and migration:
 
   `php artisan make:model Book --migration`
 
@@ -85,7 +85,7 @@ with functional API REST services and HTML5 UI.
   `php artisan migrate`
 
   Now there is a database created.
-2. Seeds
+### 2. Seeds
   Laravel uses seeds to add information to the database. Artisan has this functionality, below are the commands used to create the seeds:
 
   `php artisan make:seeder BooksTableSeeder`
@@ -101,9 +101,9 @@ with functional API REST services and HTML5 UI.
   `php artisan db:seed --class=SalesTableSeeder`
 
 
-3. Controllers
+### 3. Controllers
 
-  To create a REST API laravel has routes and controller to make it easy.
+  To create a REST API, Laravel has routes and controller to make it easy.
 
   Use artisan to create Controllers:
 
@@ -111,39 +111,71 @@ with functional API REST services and HTML5 UI.
   `php artisan make:controller SaleController`
 
 
+  The file of routes is in  `app\Http\routes.php` and contains:
+  ```php
+  Route::get('/', function () { return view('booksales');});
+  Route::get('/sale/book/{id}', 'SaleController@salesByBook');
+  Route::resource('sale', 'SaleController', ['only' => ['index','store','show']]);
+  Route::get('book/admin', function () { return view('bookadmin');});
+  Route::resource('book', 'BookController', ['only' => ['index','store','show','update','destroy']]);
+  ```
 
 
-  See the route listing
+  See the route listing:
+
   `php artisan route:list`
 
-  To avoid some security on the API change in the folder  `app\Http\Middleware`
+  ```
+  +--------+-----------+----------------+--------------+-------------------------------------------------+------------+
+  | Domain | Method    | URI            | Name         | Action                                          | Middleware |
+  +--------+-----------+----------------+--------------+-------------------------------------------------+------------+
+  |        | GET|HEAD  | /              |              | Closure                                         | web        |
+  |        | GET|HEAD  | book           | book.index   | App\Http\Controllers\BookController@index       | web        |
+  |        | POST      | book           | book.store   | App\Http\Controllers\BookController@store       | web        |
+  |        | GET|HEAD  | book/admin     |              | Closure                                         | web        |
+  |        | GET|HEAD  | book/{book}    | book.show    | App\Http\Controllers\BookController@show        | web        |
+  |        | PUT|PATCH | book/{book}    | book.update  | App\Http\Controllers\BookController@update      | web        |
+  |        | DELETE    | book/{book}    | book.destroy | App\Http\Controllers\BookController@destroy     | web        |
+  |        | GET|HEAD  | sale           | sale.index   | App\Http\Controllers\SaleController@index       | web        |
+  |        | POST      | sale           | sale.store   | App\Http\Controllers\SaleController@store       | web        |
+  |        | GET|HEAD  | sale/book/{id} |              | App\Http\Controllers\SaleController@salesByBook | web        |
+  |        | GET|HEAD  | sale/{sale}    | sale.show    | App\Http\Controllers\SaleController@show        | web        |
+  +--------+-----------+----------------+--------------+-------------------------------------------------+------------+
 
 
+  ```
 
+  #Advice:
+  To avoid some security go to the file `app\Http\Middleware\VerifyCsrfToken.php`. And add the craeted routes to `$except` list.
 
-  To easy the execution of POST and DELETE request add exceptions at the class VerifyCsrfToken:
   ```php
   class VerifyCsrfToken extends BaseVerifier
   {
   protected $except = ['book*', 'sale*'];
   }
   ```
-4. Testing with PhpUnit
+### 4. Testing with PhpUnit
 
   To test using PhpUnit, first check if PhpUnit is avaliable:
+
   `/vendor/bin/phpunit --version`
+
   You shall see:
+
   `PHPUnit 4.8.24 by Sebastian Bergmann and contributors.`
 
   Then through artisan create a test for Book:
+
   `php artisan make:test BookApiTest`
 
   To check and modify the file go to `/test/BookApiTest.php`
 
   Then through artisan create a test for Sale:
+
   `php artisan make:test SaleApiTest`
 
-  To check and modify the file go to `/test/SaleApiTest.php`
+  To check and modify the file go to `/test/SaleApiTest.php`/
 
   To execute the Test call PhpUnit:
+
   `/vendor/bin/phpunit`
