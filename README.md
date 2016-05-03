@@ -2,6 +2,8 @@
 You can view online deployment at : https://laravelprojectbooks.herokuapp.com
 with functional API REST services and HTML5 UI.
 
+The database is Heroku Postgrest.
+
 ## Book Sales Management in Laravel
 ####Henry Alejandro Orjuela Torres
 
