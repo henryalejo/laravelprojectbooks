@@ -15,7 +15,7 @@
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
-    <script src="js/angular.js" charset="utf-8"></script>
+    <script src="js/angular.min.js" charset="utf-8"></script>
     <script src="js/angular-route.min.js" charset="utf-8"></script>
     <script src="js/app.js" charset="utf-8"></script>
     <script src="js/controllers/main.js"></script>
