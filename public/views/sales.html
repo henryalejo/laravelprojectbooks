@@ -1,12 +1,101 @@
-<div class="row">
-  <table class="table">
-    <th>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+        <p class="lead">e-Book Shop </p>
+        <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h2>List of Sales</h2></div>
+        <div class="panel-body">
+          <p>Sales via ApiREST.</p>
+          <p>
+            Click on row of sale to get details
+          </p>
+        </div>
+        <!-- Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                id
+              </th>
+              <th>
+                Date of Sale
+              </th>
+              <th>
+                Amount
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="clickablerow" ng-repeat="sale in sales"  ng-click="details(sale.id)" >
+              <td>
+                {{sale.id}}
+              </td>
+              <td>
+                {{sale.dateofsale}}
+              </td>
+              <td>
+                {{sale.amount}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h1>Details</h1>
+      </div>
+      <div class="panel-body">
+        <div class="pull-right" style="font-size:2.5em;">Total: {{total | currency}}</div>
+      </div>
+      <!-- Table saleDetails -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              Book Name
+            </th>
+            <th>
+              ISBN
+            </th>
+            <th>
+              #Books
+            </th>
+            <th>
+              Price
+            </th>
+            <th>
+              Sub Total
+            </th>
+          </tr>
+        </thead>
+        <tbody>
 
-    </th>
-    <td>
-      <tr>
-        
-      </tr>
-    </td>
-  </table>
+          <tr ng-repeat="det in saleDetails">
+            <td>
+              {{det.name}}
+            </td>
+            <td>
+              {{det.isbn}}
+            </td>
+            <td>
+              {{det.pivot.num_books}}
+            </td>
+            <td>
+              {{det.pivot.book_curr_val}}
+            </td>
+            <td>
+              {{det.pivot.book_curr_val * det.pivot.num_books}}
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+
 </div>

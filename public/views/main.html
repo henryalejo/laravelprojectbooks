@@ -14,7 +14,7 @@
       <div class="row">
 
           <div class="col-md-3">
-              <p class="lead">e-Book Shop <button type="button"class="btn btn-warning" ng-click="placeOrder()" ng-disabled="cart.length==0||placeDisable" name="button">Place Order</button></p>
+              <p class="lead">e-Book Shop <button type="button"class="btn btn-warning" ng-click="placeOrder()" ng-disabled="(cart.length == 0|| placeDisable)" name="button">Place Order</button></p>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Shopping Cart <span class="glyphicon glyphicon-shopping-cart "></span> <span class="badge">{{cart.length}}</span>
@@ -30,12 +30,6 @@
                 <div class="panel-body">
                 </div>
               </div>
-              <div class="list-group">
-                  <a href="#" class="list-group-item">Category 1</a>
-                  <a href="#" class="list-group-item">Category 2</a>
-                  <a href="#" class="list-group-item">Category 3</a>
-              </div>
-
           </div>
 
           <div class="col-md-9">
@@ -45,12 +39,12 @@
 
                   <div class="col-sm-4 col-lg-4 col-md-4" ng-repeat="book in books" >
                       <div class="thumbnail">
-                          <img src="http://placehold.it/320x150" alt="">
+                          <img src="img/default.png" alt="">
                           <div class="caption">
                               <!--<h4 class="pull-right">$24.99</h4>-->
                               <h4><a href="#">{{book.name}}</a>
                               </h4>
-                              <p>Autor: {{book.author}}</p>
+                              <p>Autor: {{book.author | limitTo : 24}}</p>
                               <p>ISBN: {{book.isbn}}</p>
                               <p>Publicaton date: {{book.publication}}</p>
                           </div>
@@ -65,14 +59,6 @@
                       </div>
                   </div>
 
-
-
-                  <div class="col-sm-4 col-lg-4 col-md-4">
-                      <h4><a href="#">Like this template?</a>
-                      </h4>
-                      <p>If you like this template, then check out <a target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this tutorial</a> on how to build a working review system for your online store!</p>
-                      <a class="btn btn-primary" target="_blank" href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">View Tutorial</a>
-                  </div>
 
               </div>
 

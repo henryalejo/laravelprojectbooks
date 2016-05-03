@@ -1,22 +1,13 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name yeomanApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the yeomanApp
- */
 angular.module('myApp')
-  .controller('MainCtrl', function ($scope,$http) {
+  .controller('MainCtrl', function ($scope,$http,apiUrl) {
 
-      //$scope.url='https://laravelprojectbooks.herokuapp.com/';
-    var url= 'http://localhost/laravelproject/public/';
-    $scope.books=[];
+    $scope.books={};
     $scope.placeDisable=false;
     $scope.cart= [];
     $scope.successPanel=false;
     $scope.total=0;
+    var url= apiUrl;
     $http.get(url+ 'book').then(function successCallback(response) {
                           console.log(response.data);
                           $scope.books=  response.data;
@@ -79,4 +70,4 @@ angular.module('myApp')
 
 
 
-  });
+  })

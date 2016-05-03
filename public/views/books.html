@@ -1,20 +1,175 @@
 <div class="container">
-  <div class="row">
-    <table class="table">
-      <th>
-        <tr>
-          Name
-        </tr>
-        <tr>
-          Author
-        </tr>
-      </th>
-      <td>
-        <tr>
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h1>Book List</h1></div>
+    <div class="panel-body">
+      <p>Edit books via ApiREST</p>
+      <button type="button" ng-click="add()"class="btn btn-success"name="button">New <span class="glyphicon glyphicon-plus"></span></button>
 
+      <table class="table" ng-show="edit.id != null || postBook.id != null">
+        <thead>
+          <tr>
+            <th>
+              id
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Author
+            </th>
+            <th>
+              ISBN
+            </th>
+            <th>
+              Date/Pub
+            </th>
+            <th>
+              Price
+            </th>
+            <th>
+              T/Sales
+            </th>
+            <th>
+              Avaliable
+            </th>
+            <th>
+              Save
+            </th>
+          </tr>
+        </thead>
+        <tbody ng-show="edit.id != null">
+          <tr>
+            <td>
+              {{edit.id}}
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.name">
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.author">
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.isbn">
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.publication">
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.value"style="width: 2em;">
+            </td>
+            <td>
+              {{edit.total_sales}}
+            </td>
+            <td>
+              <input type="text" name="name" value="" ng-model="edit.avaliable" style="width: 5em;">
+            </td>
+            <td>
+              <button type="button" ng-click="save()"class="btn btn-success"name="button"><span class="glyphicon glyphicon-save"></span></button>
+
+            </td>
+          </tr>
+
+        </tbody>
+      <!-- Table Save new -->
+      <tbody ng-show="postBook.id!= null">
+        <tr>
+          <td>
+            {{postBook.id}}
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.name">
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.author">
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.isbn">
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.publication">
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.value" style="width: 2em;">
+          </td>
+          <td>
+            0
+          </td>
+          <td>
+            <input type="text" name="name" value="" ng-model="postBook.avaliable" style="width: 5em;">
+          </td>
+          <td>
+          <button type="button" ng-click="new()"class="btn btn-success"name="button"><span class="glyphicon glyphicon-save"></span></button>
+
+          </td>
         </tr>
-      </td>
+
+      </tbody>
+
+
+      </table>
+    </div>
+    <!-- Table -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            id
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Author
+          </th>
+          <th>
+            Date/Pub
+          </th>
+          <th>
+            Price
+          </th>
+          <th>
+            T/Sales
+          </th>
+          <th>
+            Avaliable
+          </th>
+          <th>
+            Edit / Delete
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="book in books">
+          <td>
+            {{book.id}}
+          </td>
+          <td>
+            {{book.name}}
+          </td>
+          <td>
+            {{book.author}}
+          </td>
+          <td>
+            {{book.publication}}
+          </td>
+          <td>
+            {{book.value}}
+          </td>
+          <td>
+            {{book.total_sales}}
+          </td>
+          <td>
+            {{book.avaliable}}
+          </td>
+          <td>
+            <button type="button" ng-click="editModel(book)" class="btn btn-warning"name="button"><span class="glyphicon glyphicon-th-list"></span></button>
+            <button type="button" ng-click="deleteBook(book.id)" class="btn btn-danger"name="button"><span class="glyphicon glyphicon-remove"></span></button>
+
+          </td>
+        </tr>
+
+      </tbody>
     </table>
   </div>
-
 </div>

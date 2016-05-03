@@ -1,4 +1,6 @@
 ### laravelprojectbooks
+You can view online deployment at : https://laravelprojectbooks.herokuapp.com
+whit functional API REST services and HTML5 UI.
 
 # Book Sales Management in Laravel
 Henry Alejandro Orjuela
@@ -88,6 +90,7 @@ Henry Alejandro Orjuela
 
   Execute seeds
   php artisan db:seed --class=BooksTableSeeder
+  php artisan db:seed --class=SalesTableSeeder
 
 
   To easy the execution of POST and DELETE request add exceptions at the class VerifyCsrfToken:

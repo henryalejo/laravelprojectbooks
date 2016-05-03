@@ -48,7 +48,13 @@ class SalesTableSeeder extends Seeder
           DB::table('books')->where('id',$books[$booksrand[$j]]->id)->increment('total_sales', $randNumBooks);
 
         };
-
+        //Update amount of sale
+        $amountsTables =DB::table('sale_books')->where('sale_id',$mySaleId)->get();
+        $temp=0;
+        foreach ($amountsTables as $key => $value) {
+          $temp = $temp + ($value->num_books*$value->book_curr_val);
+        }
+        DB::table('sales')->where('id',$mySaleId)->update(['amount'=>$temp]);
       };
 
     }

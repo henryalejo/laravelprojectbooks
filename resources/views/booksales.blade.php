@@ -19,7 +19,9 @@
     <script src="js/angular-route.min.js" charset="utf-8"></script>
     <script src="js/app.js" charset="utf-8"></script>
     <script src="js/controllers/main.js"></script>
-    <script src="js/controllers/about.js"></script>
+    <script src="js/controllers/books.js"></script>
+    <script src="js/controllers/sales.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,7 +43,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">e-Book Shop</a>
+              <a class="navbar-brand" href="">e-Book Shop</a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
