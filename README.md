@@ -110,6 +110,7 @@ The database is Heroku Postgrest.
   Use artisan to create Controllers:
 
   `php artisan make:controller BookController`
+  
   `php artisan make:controller SaleController`
 
 
